@@ -1,0 +1,39 @@
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+# Input data files are available in the read-only "../input/" directory
+# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
+
+import os
+for dirname, _, filenames in os.walk('/kaggle/input'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+import pandas as pd
+from sklearn.datasets import load_digits
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+digits = load_digits()
+dir(digits)
+X = digits.data
+X.shape
+y=digits.target
+y.shape
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2,random_state=0)
+knn=KNeighborsClassifier(n_neighbors=2,metric='euclidean',p=4)
+knn.fit(X_train,y_train)
+y_pred=knn.predict(X_test)
+y_pred
+score=accuracy_score(y_test,y_pred)
+score
+cm = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(10,7))
+sns.heatmap(cm, annot=True)
+plt.xlabel('Predicted')
+plt.ylabel('Truth')
